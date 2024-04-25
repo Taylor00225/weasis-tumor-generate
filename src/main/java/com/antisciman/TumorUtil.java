@@ -16,8 +16,12 @@ public class TumorUtil {
         File getFile();
     }
 
+    public interface ImageResource extends Resource {
+        BufferedImage getImage();
+    }
+
     public enum DemoMessage implements Resource{
-        RESULT(STR."\{ENV_PATH}\\output_dcm\\info.txt");
+        RESULT(STR."\{ENV_PATH}\\info.txt");
 
         private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
         private final String path;
@@ -56,7 +60,7 @@ public class TumorUtil {
         }
     }
 
-    public enum DemoImage implements Resource{
+    public enum DemoImage implements ImageResource{
         PIC_1(STR."\{ENV_PATH}\\demo.jpg"),
         PIC_2(STR."\{ENV_PATH}\\demo.jpg");
 
@@ -79,6 +83,7 @@ public class TumorUtil {
             return new File(path);
         }
 
+        @Override
         public BufferedImage getImage() {
             BufferedImage img = null;
             try {
@@ -89,5 +94,37 @@ public class TumorUtil {
             return img;
         }
 
+    }
+
+    public static class OtherImage implements ImageResource {
+        private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+        private final String path;
+        OtherImage(String path) {
+            if (path == null) {
+                throw new NullPointerException();
+            }
+            this.path = path;
+        }
+
+        @Override
+        public String getPath() {
+            return path;
+        }
+
+        @Override
+        public File getFile() {
+            return new File(path);
+        }
+
+        @Override
+        public BufferedImage getImage() {
+            BufferedImage img = null;
+            try {
+                img = ImageIO.read(getFile());
+            } catch (IOException e) {
+                LOGGER.error(e.toString());
+            }
+            return img;
+        }
     }
 }
