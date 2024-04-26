@@ -26,7 +26,7 @@ public class TumorToolBar extends WtoolBar {
                 return;
             }
             if (!TumorRunnable.isDone()) {
-                String m = "Generating tumors, please wait!";
+                String m = "Project is running, please wait!";
                 JOptionPane.showMessageDialog(
                         SwingUtilities.getWindowAncestor(this), m, "Error", JOptionPane.ERROR_MESSAGE
                 );
