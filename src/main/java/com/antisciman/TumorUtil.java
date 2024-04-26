@@ -21,7 +21,7 @@ public class TumorUtil {
     }
 
     public enum DemoMessage implements Resource{
-        RESULT(STR."\{ENV_PATH}\\info.txt");
+        RESULT(STR."\{ENV_PATH}\\output_dcm\\info.txt");
 
         private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
         private final String path;

@@ -37,22 +37,22 @@ public class TumorRunnable implements Runnable{
         );
 
         String line = STR."\{ZonedDateTime.now()}\n";   // mark date and time
-        StringBuffer stringBuffer = new StringBuffer(line);
         try {
             Process proc = Runtime.getRuntime().exec(new String[]{STR."\{ENV_PATH}\\demo.bat"});
             BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             File outputFile = new File(STR."\{ENV_PATH}\\output_dcm\\info.txt");
 
-            if (outputFile.createNewFile()) {
-                LOGGER.info("Create info.txt");
+            if (!outputFile.createNewFile()) {
+                outputFile.delete();
+                outputFile.createNewFile();
             }
+            LOGGER.info("Create info.txt");
 
             BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
             out.write(line);
 
             while ((line = in.readLine()) != null) {
                 line = STR."\{line}\n";
-                stringBuffer.append(line);
                 out.write(line);
                 LOGGER.info(line);
             }
@@ -77,7 +77,9 @@ public class TumorRunnable implements Runnable{
                 JOptionPane.INFORMATION_MESSAGE
         );
 
-        TumorInfoBox box = new TumorInfoBox(owner);
+        TumorInfoBox box = new TumorInfoBox(owner,
+                TumorUtil.DemoImage.PIC_1,
+                TumorUtil.DemoImage.PIC_2);
         Rectangle bound =
                 GraphicsEnvironment.getLocalGraphicsEnvironment()
                         .getDefaultScreenDevice()
