@@ -99,7 +99,7 @@ public class TumorUtil {
     public static class OtherImage implements ImageResource {
         private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
         private final String path;
-        OtherImage(String path) {
+        OtherImage(String path) throws NullPointerException{
             if (path == null) {
                 throw new NullPointerException();
             }
